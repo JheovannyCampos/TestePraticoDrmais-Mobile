@@ -1,4 +1,6 @@
 import React from 'react';
+import { RectButtonProps } from 'react-native-gesture-handler';
+import { ProjectsDTO } from '../../dtos/ProjectsDTO';
 
 import {
   Container,
@@ -8,13 +10,21 @@ import {
   Details,
 } from './styles';
 
-export function ProjectCard(){
+interface Props extends RectButtonProps{
+    data: ProjectsDTO;
+    onPress?: () => void;
+}
+
+export function ProjectCard({data, onPress, ...rest}: Props){
   return (
-    <Container>
+    <Container
+        {...rest}
+        onPress={onPress}
+    >
         <Details>
-            <Code>123</Code>
-            <Title>Projeto Teste</Title>
-            <Description>Descrição teste 123</Description>
+            <Code>{data.idprojeto}</Code>
+            <Title>{data.ds_titulo}</Title>
+            <Description>{data.ds_descricao}</Description>
         </Details>
     </Container>
   );

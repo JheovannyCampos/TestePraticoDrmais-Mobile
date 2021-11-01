@@ -1,6 +1,4 @@
-import { FlatList } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
-import { ProjectsDTO } from '../../dtos/ProjectsDTO';
 
 export const Container = styled.View`
     flex: 1;
@@ -25,15 +23,21 @@ export const Title = styled.Text`
 
 `;
 
-export const Projects = styled.View`
-    flex: 1;
-    padding: 0 24px;
-    margin-top: 12px;
+export const TextInput = styled.TextInput`
+    width: 250px;
+    height: 50px;
+    border: 1px solid;
+    margin-left: 20px;
 `;
 
-export const ProjectsList = styled(FlatList).attrs({
-	contentContainerStyle: {
-		padding: 24
-	},
-	showsVerticalScrollIndicator: false,
-})``;
+export const Content = styled.View`
+    
+`;
+
+export const TextInputDesc = styled.TextInput`
+    width: 350px;
+    height: 150px;
+    border: 1px solid;
+    margin-left: 20px;
+    text-align: center;
+`;

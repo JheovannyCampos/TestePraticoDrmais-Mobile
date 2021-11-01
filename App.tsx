@@ -1,8 +1,9 @@
 import React from "react";
-import { Dashboard } from "./src/screens/Dashboard";
+import { Routes } from "./src/routes";
+import { NewProject } from "./src/screens/NewProject";
 
 export default function App(){
   return(
-    <Dashboard />
+    <Routes />
   )
 }

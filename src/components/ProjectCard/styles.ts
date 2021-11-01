@@ -26,7 +26,7 @@ export const Title = styled.Text`
 `;
 
 export const Description = styled.Text`
-    width: 300px;
+    width: 280px;
     height: 75px;
 
     border: 1px solid;
