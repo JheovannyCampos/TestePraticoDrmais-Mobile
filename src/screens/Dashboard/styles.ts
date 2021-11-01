@@ -1,3 +1,4 @@
+import { FlatList } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -23,7 +24,9 @@ export const Title = styled.Text`
 `;
 
 export const Projects = styled.View`
-
+    flex: 1;
+    padding: 0 24px;
+    margin-top: 12px;
 `;
 
 export const ProjectsList = styled.View`
