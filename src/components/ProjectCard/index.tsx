@@ -1,5 +1,5 @@
 import React from 'react';
-import { RectButtonProps } from 'react-native-gesture-handler';
+import { TouchableOpacityProps } from 'react-native';
 import { ProjectsDTO } from '../../dtos/ProjectsDTO';
 
 import {
@@ -10,16 +10,16 @@ import {
   Details,
 } from './styles';
 
-interface Props extends RectButtonProps{
+interface Props extends TouchableOpacityProps{
     data: ProjectsDTO;
-    onPress?: () => void;
+    onPress?: () => any;
 }
 
 export function ProjectCard({data, onPress, ...rest}: Props){
   return (
-    <Container
-        {...rest}
-        onPress={onPress}
+    <Container 
+      onPress={onPress}
+      {...rest}
     >
         <Details>
             <Code>{data.idprojeto}</Code>
