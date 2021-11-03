@@ -21,9 +21,9 @@ export function Dashboard(){
   function handleNewProject(){
     navigation.navigate('NewProject');
   }
-
-  function handleProjectDetails(projects: ProjectsDTO){
-    navigation.navigate('ProjectDetails', { ...projects });
+  
+  function handleProjectDetails(project: ProjectsDTO){
+    navigation.navigate('ProjectDetails', { project } );
   }
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export function Dashboard(){
       }
     }
     fetchProjects();
-  },[])
+  },[]);
 
   return (
     <Container>
@@ -45,12 +45,12 @@ export function Dashboard(){
             <Button title="+ Adicionar"  onPress={handleNewProject}></Button>
         </Header>
 
-        <Projects>
+        <Projects> 
             <ProjectsList
               data={projects}
               keyExtractor={item => item.idprojeto}
               renderItem={({ item }: { item: ProjectsDTO }) => 
-              <ProjectCard data={item} onPress={handleProjectDetails} />}
+              <ProjectCard data={item} onPress={() => handleProjectDetails(item)} />}
             />
         </Projects>
     </Container>
