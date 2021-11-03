@@ -22,8 +22,8 @@ export function Dashboard(){
     navigation.navigate('NewProject');
   }
 
-  function handleProjectDetails(project: ProjectsDTO){
-    navigation.navigate('ProjectDetails', project);
+  function handleProjectDetails(projects: ProjectsDTO){
+    navigation.navigate('ProjectDetails', { ...projects });
   }
 
   useEffect(() => {

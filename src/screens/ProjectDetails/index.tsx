@@ -29,12 +29,12 @@ export function ProjectDetails() {
     
     const route = useRoute();
     const { project } = route.params as Params
-
+    console.log(project)
 
     useEffect(() => {
         async function fetchProjects(){
             try {
-                const response = await api.get('/projects?idprojeto=1')
+                const response = await api.get(`/projects?idprojeto=${projects}`)
                 setProjects(response.data);
             } catch (error) {
                 console.log(error)
