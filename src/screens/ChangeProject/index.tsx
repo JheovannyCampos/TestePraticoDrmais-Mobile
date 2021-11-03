@@ -57,13 +57,8 @@ export function ChangeProject() {
     const  { project }  = route.params as Params;
     console.log(project)
     async function handleRegister(form: FormData) {
-        // const newProject = {
-        //     idprojeto: form.idprojeto,
-        //     ds_titulo: form.ds_titulo,
-        //     ds_descricao: form.ds_descricao,
-        // }
         try {
-            await api.put(`/projects?idprojeto=${project.idprojeto}`, {
+            await api.put(`/projects/${project.id}`,{
                 idprojeto: form.idprojeto,
                 ds_titulo: form.ds_titulo,
                 ds_descricao: form.ds_descricao,

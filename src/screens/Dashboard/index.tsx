@@ -21,7 +21,7 @@ export function Dashboard(){
   function handleNewProject(){
     navigation.navigate('NewProject');
   }
-  
+
   function handleProjectDetails(project: ProjectsDTO){
     navigation.navigate('ProjectDetails', { project } );
   }
@@ -36,7 +36,7 @@ export function Dashboard(){
       }
     }
     fetchProjects();
-  },[]);
+  },[projects]);
 
   return (
     <Container>

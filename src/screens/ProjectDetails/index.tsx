@@ -32,15 +32,13 @@ export function ProjectDetails() {
     const route = useRoute();
 
     const  { project }  = route.params as Params;
-
+    console.log(project.id)
     function handleChangeProject(project: ProjectsDTO){
         navigation.navigate('ChangeProject', { project: project})
     }
 
     async function handleDelete(){
-        const response = await api.delete(`/projects?idprojeto=${project.idprojeto}`);
-        setProjects(response.data);
-
+        await api.delete(`/projects/${project.id}`).then(() => {navigation.navigate("Dashboard")});
     }
 
     useEffect(() => {
@@ -67,7 +65,7 @@ export function ProjectDetails() {
             </Header>
 
             <Projects>
-                <Text>Toque no card para editar</Text>
+                <Text>Toque no Card para edita-lo</Text>
             <ProjectsList
               data={projects}
               keyExtractor={item => item.idprojeto}
