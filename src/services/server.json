@@ -1,24 +1,3 @@
 {
-    "projects": [
-        {
-            "idprojeto":123,
-            "ds_titulo":"Projeto teste 123",
-            "ds_descricao":"Descricao teste 123"
-        },
-        {
-            "idprojeto":124,
-            "ds_titulo":"Projeto teste 124",
-            "ds_descricao":"Descricao teste 124"
-        },
-        {
-            "idprojeto":125,
-            "ds_titulo":"Projeto teste 125",
-            "ds_descricao":"Descricao teste 125"
-        },
-        {
-            "idprojeto":126,
-            "ds_titulo":"Projeto teste 126",
-            "ds_descricao":"Descricao teste 126"
-        }
-    ]
+  "projects": []
 }

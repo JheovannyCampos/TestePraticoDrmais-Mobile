@@ -1,4 +1,3 @@
-import { FlatList } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -21,25 +20,24 @@ export const Title = styled.Text`
     font-size: 24px;
     padding-left: 20px;
     color: black;
+
 `;
 
-export const ButtonArea = styled.View`
-    width: 800px;
-    height: 80px;
-    padding: 10px;
-    align-items: flex-start;
-    justify-content: center;
+export const TextInput = styled.TextInput`
+    width: 250px;
+    height: 50px;
+    border: 1px solid;
+    margin-left: 20px;
 `;
 
-export const Projects = styled.View`
-    flex: 1;
-    padding: 0 24px;
-    margin-top: 12px;
+export const Content = styled.View`
+    
 `;
 
-export const ProjectsList = styled(FlatList).attrs({
-	contentContainerStyle: {
-		padding: 24
-	},
-	showsVerticalScrollIndicator: false,
-})``;
+export const TextInputDesc = styled.TextInput`
+    width: 350px;
+    height: 150px;
+    border: 1px solid;
+    margin-left: 20px;
+    text-align: center;
+`;

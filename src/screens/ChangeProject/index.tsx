@@ -12,12 +12,17 @@ import {
     Content,
 } from './styles';
 import api from '../../services/api';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { ProjectsDTO } from '../../dtos/ProjectsDTO';
 
 interface FormData {
     idprojeto: string;
     ds_titulo: string;
     ds_descricao: string;
+}
+
+interface Params {
+    project: ProjectsDTO;
 }
 
 const schema = Yup.object().shape({
@@ -34,7 +39,7 @@ const schema = Yup.object().shape({
         .required("A descrição é obrigatório"),
 })
 
-export function NewProject() {
+export function ChangeProject() {
 
     const navigation: any = useNavigation();
 
@@ -47,15 +52,17 @@ export function NewProject() {
         resolver: yupResolver(schema),
     });
 
-    async function handleRegister(form: FormData) {
-        const newProject = {
-            idprojeto: form.idprojeto,
-            ds_titulo: form.ds_titulo,
-            ds_descricao: form.ds_descricao,
-        }
-        try {
-            await api.post("/projects",  newProject ).then(() => navigation.navigate("Dashboard"))           
+    const route = useRoute();
 
+    const  { project }  = route.params as Params;
+    console.log(project)
+    async function handleRegister(form: FormData) {
+        try {
+            await api.put(`/projects/${project.id}`,{
+                idprojeto: form.idprojeto,
+                ds_titulo: form.ds_titulo,
+                ds_descricao: form.ds_descricao,
+            }).then(() => navigation.navigate("Dashboard"))           
             reset();
         } catch (error: any) {
             console.log(error.message);
@@ -65,7 +72,7 @@ export function NewProject() {
     return (
         <Container>
             <Header>
-            <Title>Novo Projeto</Title>
+            <Title>Alterar Projeto</Title>
             <Button title="Salvar"  onPress={handleSubmit(handleRegister)}></Button>
         </Header>
         <Content>
