@@ -22,6 +22,10 @@ export function Dashboard(){
     navigation.navigate('NewProject');
   }
 
+  function handleProjectDetails(projects: ProjectsDTO){
+    navigation.navigate('ProjectDetails', { ...projects });
+  }
+
   useEffect(() => {
     async function fetchProjects(){
       try {
@@ -46,7 +50,7 @@ export function Dashboard(){
               data={projects}
               keyExtractor={item => item.idprojeto}
               renderItem={({ item }: { item: ProjectsDTO }) => 
-              <ProjectCard data={item} />}
+              <ProjectCard data={item} onPress={handleProjectDetails} />}
             />
         </Projects>
     </Container>
