@@ -5,7 +5,7 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "start": "react-native start",
-    "api": "json-server ./src/services/server.json --host 172.18.0.120 --port 3333 --delay 700"
+    "api": "json-server ./src/services/server.json --host 192.168.100.66 --port 3333 --delay 700"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.3",
