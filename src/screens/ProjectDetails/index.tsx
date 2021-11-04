@@ -1,18 +1,20 @@
 import { useRoute, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Alert, Text } from 'react-native';
+import { useForm } from 'react-hook-form';
+import { Alert } from 'react-native';
 import { Button } from '../../components/Button';
-import { ProjectCard } from '../../components/ProjectCard';
+import { InputForm } from '../../components/InputForm';
 import { ProjectsDTO } from '../../dtos/ProjectsDTO';
 import api from '../../services/api';
+import * as Yup from 'yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
     Container,
     Header,
     Title,
-    ButtonArea,
-    Projects,
-    ProjectsList,
+    Content,
+    ButtonView,
 } from './styles';
 
 interface ProjectProps {
@@ -21,21 +23,57 @@ interface ProjectProps {
     ds_descricao: string;
 }
 
+interface FormData {
+    idprojeto: string;
+    ds_titulo: string;
+    ds_descricao: string;
+}
 interface Params {
     project: ProjectsDTO;
 }
+
+const schema = Yup.object().shape({
+    idprojeto: Yup
+        .number()
+        .required("O código é obrigatório")
+        .positive("O código deve ser positivo")
+        .typeError("Informe um valor numérico"),
+    ds_titulo: Yup
+        .string()
+        .required("O Título é obrigatório"),
+    ds_descricao: Yup
+        .string()
+        .required("A descrição é obrigatório"),
+})
 
 export function ProjectDetails() {
     const [projects, setProjects] = useState<ProjectProps[]>([])
     
     const navigation: any = useNavigation();
+    
     const route = useRoute();
 
     const  { project }  = route.params as Params;
-    console.log(project.id)
-    function handleChangeProject(project: ProjectsDTO){
-        navigation.navigate('ChangeProject', { project: project})
-    }
+
+    const {
+        control,
+        handleSubmit,
+        reset,
+        formState: { errors }
+    } = useForm({
+        resolver: yupResolver(schema),
+        defaultValues: project,
+    });
+
+    function alerta() {
+        Alert.alert(`Você deseja deletar?`,
+        "",
+        [
+          {text: 'Cancelar', },
+          {text: 'Deletar', onPress: () => handleDelete()},
+        ],
+          {cancelable: false}
+        )}
 
     async function handleDelete(){
         await api.delete(`/projects/${project.id}`).then(() => {navigation.navigate("Dashboard")});
@@ -53,27 +91,54 @@ export function ProjectDetails() {
         fetchProjects();
     },[])
 
-
+    async function handleRegister(form: FormData) {
+        try {
+            await api.put(`/projects/${project.id}`,{
+                idprojeto: form.idprojeto,
+                ds_titulo: form.ds_titulo,
+                ds_descricao: form.ds_descricao,
+            }).then(() => navigation.navigate("Dashboard"))           
+            reset();
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    }
 
     return (
         <Container>
             <Header>
-                <Title>Detalhes do Projeto</Title>
-                    <ButtonArea>
-                        <Button title="Deletar"  onPress={() => {handleDelete()}} />
-                    </ButtonArea>    
+                <Title>Alterar Projeto</Title>
+                    <ButtonView>
+                        <Button title="Salvar"  onPress={handleSubmit(handleRegister)}></Button>
+                        <Button title="Apagar"  onPress={alerta}></Button>
+                    </ButtonView>
             </Header>
+            <Content>
+                <Title>Código</Title>
+                <InputForm
+                    name = "idprojeto"
+                    control = {control}
+                    keyboardType = "numeric"
+                    placeholder="Digite o Código do Projeto"
+                    error={errors.idprojeto && errors.idprojeto.message}
+                />
 
-            <Projects>
-                <Text>Toque no Card para edita-lo</Text>
-            <ProjectsList
-              data={projects}
-              keyExtractor={item => item.idprojeto}
-              renderItem={({ item }: { item: ProjectsDTO }) => 
-              <ProjectCard data={item} onPress={() => handleChangeProject(item)} />}
-            />
-        </Projects>
+                <Title>Título</Title>
+                <InputForm 
+                    name = "ds_titulo"
+                    control = {control}
+                    placeholder="Digite o Nome do Projeto"
+                    error={errors.ds_titulo && errors.ds_titulo.message}
+                />
 
+                <Title>Descrição</Title>
+                <InputForm 
+                    name = "ds_descricao"
+                    control = {control}
+                    placeholder="Faça uma breve descrição do Projeto"
+                    error={errors.ds_descricao && errors.ds_descricao.message}
+                />
+            </Content>
         </Container>
     )
 }
